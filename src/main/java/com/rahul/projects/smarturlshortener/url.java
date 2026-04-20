@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "urls")
-public class url{
+public class Url{
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class url{
     private String originalUrl;
 
     @Column(unique=true ,nullable = false)
-    private String shortcode;
+    private String shortCode;
 
     private LocalDateTime createdAt;
 
