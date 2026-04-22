@@ -1,5 +1,6 @@
 package com.rahul.projects.smarturlshortener;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -14,13 +15,18 @@ public class UrlService {
     }
 
     public Url shortenUrl(String originalUrl){
-        Url existing = urlRepository.findByOriginalUrl(originalUrl);
+          Optional<Url> existing = urlRepository.findByOriginalUrl(originalUrl);
 
-        if(existing != null){
-            return existing;
-        }
+         if(existing.isPresent()){
+          return existing.get();
+    }
 
-        String shortcode = UUID.randomUUID().toString().substring(0,8);
+         String shortcode;
+
+     do {
+        shortcode = UUID.randomUUID().toString().substring(0, 8);
+     } while (urlRepository.existsByShortCode(shortcode)); 
+
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
         url.setShortCode(shortcode);
@@ -28,10 +34,17 @@ public class UrlService {
 
         return urlRepository.save(url);
     }
-    public Url getByShortCode(String shortCode){
-        return urlRepository.findByShortCode(shortCode);
-    }
+      public Url getByShortCode(String shortCode){
+    return urlRepository.findByShortCode(shortCode)
+        .orElseThrow(() -> new RuntimeException("Short URL not found"));
+}
+     public Url getAndIncrementClicks(String shortCode){
 
-    
-     
+    Url url = urlRepository.findByShortCode(shortCode)
+        .orElseThrow(() -> new RuntimeException("Short URL not found"));
+
+    url.setClicks(url.getClicks() + 1);
+
+    return urlRepository.save(url);
+}
 }
