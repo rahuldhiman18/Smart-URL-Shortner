@@ -27,7 +27,7 @@ public class UrlService {
 
         return urlRepository.save(url);
     }
-    public Url getShortCode(String shortCode){
+    public Url getByShortCode(String shortCode){
         return urlRepository.findByShortCode(shortCode);
 
     }
