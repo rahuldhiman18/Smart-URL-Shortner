@@ -17,15 +17,14 @@ public class Url{
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false ,unique = true)
-    private String originalUrl;
+    @Column(name = "original_url", nullable = false, unique = true)
+      private String originalUrl;
+     
+      @Column(name = "short_code", unique = true, nullable = false)
+       private String shortCode;
 
-    @Column(unique=true ,nullable = false)
-    private String shortCode;
-
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+       @Column(name = "created_at", nullable = false)
+       private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private Long clicks;

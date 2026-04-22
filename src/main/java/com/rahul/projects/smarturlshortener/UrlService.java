@@ -1,7 +1,8 @@
 package com.rahul.projects.smarturlshortener;
-import org.springframework.stereotype.Service;
-import java.util.UUID;
 import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
 
 @Service 
 public class UrlService {
@@ -29,7 +30,8 @@ public class UrlService {
     }
     public Url getByShortCode(String shortCode){
         return urlRepository.findByShortCode(shortCode);
-
     }
+
+    
      
 }
