@@ -15,6 +15,7 @@ public class UrlService {
     }
 
     public Url shortenUrl(String originalUrl){
+         originalUrl = originalUrl.trim();
           Optional<Url> existing = urlRepository.findByOriginalUrl(originalUrl);
 
          if(existing.isPresent()){
