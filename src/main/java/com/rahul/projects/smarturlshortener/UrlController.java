@@ -33,9 +33,12 @@ public class UrlController {
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
 
         Url url = urlService.getAndIncrementClicks(shortCode);
+        if(url==null){
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create(url.getOriginalUrl()))
+                .location(URI.create(url.getOriginalUrl().trim()))
                 .build();
     }
 }
