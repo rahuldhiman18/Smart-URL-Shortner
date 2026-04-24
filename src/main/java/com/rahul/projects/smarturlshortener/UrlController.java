@@ -23,12 +23,12 @@ public class UrlController {
 
     // Shorten URL
     @PostMapping("/shorten")
-    public ResponseEntity<Url> shortenUrl(@RequestBody String originalUrl) {
+    public ResponseEntity<?> shortenUrl(@RequestBody String originalUrl) {
         try{
         Url url = urlService.shortenUrl(originalUrl);
         return ResponseEntity.ok(url);
     } catch(IllegalArgumentException e){
-       return ResponseEntity.badRequest().build();
+       return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
 }
 
@@ -43,5 +43,5 @@ public class UrlController {
      } catch(RuntimeException e){
            return ResponseEntity.notFound().build();
      }
-   }
+    }
 }
