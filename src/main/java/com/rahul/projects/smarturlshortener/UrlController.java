@@ -31,14 +31,13 @@ public class UrlController {
     // Redirect to original URL
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
-
+     try {
         Url url = urlService.getAndIncrementClicks(shortCode);
-        if(url==null){
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create(url.getOriginalUrl().trim()))
-                .build();
-    }
+           .location(URI.create(url.getOriginalUrl().trim()))
+           .build();
+     } catch(RuntimeException e){
+           return ResponseEntity.notFound().build();
+     }
+   }
 }
