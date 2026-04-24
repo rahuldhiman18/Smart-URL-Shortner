@@ -24,9 +24,13 @@ public class UrlController {
     // Shorten URL
     @PostMapping("/shorten")
     public ResponseEntity<Url> shortenUrl(@RequestBody String originalUrl) {
+        try{
         Url url = urlService.shortenUrl(originalUrl);
         return ResponseEntity.ok(url);
+    } catch(IllegalArgumentException e){
+       return ResponseEntity.badRequest().build();
     }
+}
 
     // Redirect to original URL
     @GetMapping("/{shortCode}")

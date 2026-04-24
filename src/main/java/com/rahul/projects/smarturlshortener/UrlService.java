@@ -16,6 +16,13 @@ public class UrlService {
 
     public Url shortenUrl(String originalUrl){
          originalUrl = originalUrl.trim();
+         if(originalUrl==null || originalUrl.isBlank()){
+            throw new IllegalArgumentException("Url cannot be empty");
+         }
+
+         if(!originalUrl.startsWith("http://") && !originalUrl.startsWith("https://")){
+            throw new IllegalArgumentException("Invalid Url format");
+         }
           Optional<Url> existing = urlRepository.findByOriginalUrl(originalUrl);
 
          if(existing.isPresent()){
