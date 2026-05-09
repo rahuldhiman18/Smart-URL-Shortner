@@ -23,9 +23,9 @@ public class UrlController {
 
     // Shorten URL
     @PostMapping("/shorten")
-    public ResponseEntity<?> shortenUrl(@RequestBody String originalUrl) {
+    public ResponseEntity<?> shortenUrl(@RequestBody ShortenRequest request) {
         try{
-        Url url = urlService.shortenUrl(originalUrl);
+        Url url = urlService.shortenUrl(request);
         return ResponseEntity.ok(url);
     } catch(IllegalArgumentException e){
        return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));

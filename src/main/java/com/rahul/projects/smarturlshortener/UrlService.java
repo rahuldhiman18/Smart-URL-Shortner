@@ -14,8 +14,8 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
 
-    public Url shortenUrl(String originalUrl){
-         originalUrl = originalUrl.trim();
+    public Url shortenUrl(ShortenRequest request){
+         String originalUrl = request.getOriginalUrl().trim();
          if(originalUrl==null || originalUrl.isBlank()){
             throw new IllegalArgumentException("Url cannot be empty");
          }
@@ -31,9 +31,16 @@ public class UrlService {
 
          String shortcode;
 
-     do {
-        shortcode = UUID.randomUUID().toString().substring(0, 8);
-     } while (urlRepository.existsByShortCode(shortcode)); 
+         if(request.getCustomCode() != null &&  !request.getCustomCode().isBlank()){
+            if(urlRepository.existsByShortCode(request.getCustomCode())){
+                throw new IllegalArgumentException("Custome code already taken");
+            }
+            shortcode = request.getCustomCode();
+          } else{
+                do{
+                    shortcode = UUID.randomUUID().toString().substring(0 , 8);
+                }   while(urlRepository.existsByShortCode(shortcode));
+         }
 
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
@@ -41,7 +48,8 @@ public class UrlService {
         url.setCreatedAt(LocalDateTime.now());
 
         return urlRepository.save(url);
-    }
+    } 
+
       public Url getByShortCode(String shortCode){
     return urlRepository.findByShortCode(shortCode)
         .orElseThrow(() -> new RuntimeException("Short URL not found"));
