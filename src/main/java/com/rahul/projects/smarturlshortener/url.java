@@ -26,6 +26,9 @@ public class Url{
        @Column(name = "created_at", nullable = false)
        private LocalDateTime createdAt;
 
+       @Column(name = "expiryAt", nullable=true)
+       private LocalDateTime expiryAt;
+
     @Column(nullable = false)
     private Long clicks;
 
@@ -56,6 +59,14 @@ public class Url{
     }
     public void setCreatedAt(LocalDateTime createdAt){
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getExpiryAt(){
+        return expiryAt;
+    }
+
+    public void setExpiryAt(LocalDateTime expiryAt){
+        this.expiryAt = expiryAt;
     }
 
     public Long getClicks(){

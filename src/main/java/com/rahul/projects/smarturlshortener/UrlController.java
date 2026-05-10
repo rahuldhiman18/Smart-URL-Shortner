@@ -40,8 +40,11 @@ public class UrlController {
         return ResponseEntity.status(HttpStatus.FOUND)
            .location(URI.create(url.getOriginalUrl().trim()))
            .build();
-     } catch(RuntimeException e){
+     }    catch(IllegalArgumentException e){
+        return ResponseEntity.status(410).build();
+     } 
+     catch(RuntimeException e){
            return ResponseEntity.notFound().build();
-     }
+     }  
     }
 }

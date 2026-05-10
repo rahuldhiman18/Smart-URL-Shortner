@@ -45,6 +45,7 @@ public class UrlService {
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
         url.setShortCode(shortcode);
+        url.setExpiryAt(request.getExpiryAt());
         url.setCreatedAt(LocalDateTime.now());
 
         return urlRepository.save(url);
@@ -58,6 +59,10 @@ public class UrlService {
 
     Url url = urlRepository.findByShortCode(shortCode)
         .orElseThrow(() -> new RuntimeException("Short URL not found"));
+
+        if(url.getExpiryAt() != null && LocalDateTime.now().isAfter(url.getExpiryAt())){
+            throw new IllegalArgumentException("Url expired");
+        }
 
     url.setClicks(url.getClicks() + 1);
 
