@@ -10,16 +10,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api")
 public class UrlController {
 
     private final UrlService urlService;
+    private final QRService qrService;
 
-    public UrlController(UrlService urlService) {
+    public UrlController(UrlService urlService, QRService qrService) {
         this.urlService = urlService;
+        this.qrService = qrService;
     }
+
 
     // Shorten URL
     @PostMapping("/shorten")
@@ -47,4 +52,18 @@ public class UrlController {
            return ResponseEntity.notFound().build();
      }  
     }
+
+    @GetMapping("/qr/{shortcode}")
+    public ResponseEntity<byte[]> genrateQR(@PathVariable String shortcode){
+        try {
+            Url url = urlService.getByShortCode(shortcode);
+            byte[] qrcode = qrService.generateQRCode(url.getOriginalUrl());
+            return ResponseEntity.ok()
+                   .header("Content-Type","image/png")
+                   .body(qrcode);
+        } catch(Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
 }
