@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 public class UrlService {
    
     private final UrlRepository  urlRepository;
+    private final ClickAnalyticsRepository clickAnalyticsRepository;
 
-    public UrlService(UrlRepository urlRepository){
+    public UrlService(UrlRepository urlRepository , ClickAnalyticsRepository  clickAnalyticsRepository){
         this.urlRepository = urlRepository;
+        this.clickAnalyticsRepository = clickAnalyticsRepository;
     }
 
     public Url shortenUrl(ShortenRequest request){
@@ -65,6 +67,13 @@ public class UrlService {
         }
 
     url.setClicks(url.getClicks() + 1);
+
+    ClickAnalytics click = new ClickAnalytics();
+    click.setUrl(url);
+    click.setClickedAt(LocalDateTime.now());
+    click.setDevice("unknown");
+    click.setBrowser("unknown");
+    clickAnalyticsRepository.save(click);
 
     return urlRepository.save(url);
 }
