@@ -1,0 +1,72 @@
+.hero-section{
+    min-height: calc(100vh-72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    background-color: #0f172a;
+    color: white;
+}
+
+.hero-content{
+    max-width: 850px;
+    text-align: center;
+
+}
+
+.hero-badge{
+    display: inline-block;
+    margin-bottom: 24px;
+    padding: 8px 18px;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    color: #7dd3fc;
+    background-color: rgba(15, 23, 42, 0.8);
+}
+
+.hero-content h1{
+    margin-bottom: 24px;
+    font-size: 56px;
+    line-height: 1.1;
+}
+
+.hero-description{
+    max-width: 650px;
+    margin: 0 auto 32px;
+    color:  #cbd5e1;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.url-input-box{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    background-color: white;
+    border-radius: 16px;
+}
+
+.url-input-box input{
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.url-input_box button{
+    border: none;
+    padding: 0 24px;
+    border-radius: 12px;
+    background-color:#2563eb;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.url-input-box button:hover {
+  background-color: #1d4ed8;
+}
