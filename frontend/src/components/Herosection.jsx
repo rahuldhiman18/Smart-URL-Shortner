@@ -1,5 +1,13 @@
-import "./Herosection.css";
-function Herosection(){
+import { shortenUrl } from "../services/urlService";
+import { useState} from "react";
+import "./HeroSection.css";
+function HeroSection(){
+    const[longUrl,setLongUrl] = useState("")
+
+    const handleShortenUrl = async()=> {
+        const data = await shortenUrl(longUrl);
+        console.log(data);
+    };
     return (
         <section className="hero-section" id = "shorten">
             <div className="hero-content">
@@ -12,12 +20,20 @@ function Herosection(){
              </p>
 
              <div className="url-input-box">
-                <input type ="text" placeholder="Paste your long URLs ..." />
-                <button> Short Url </button>
+                <input type ="text" placeholder="Paste your long URLs ..."
+                value ={longUrl} 
+                onChange ={(event) => setLongUrl(event.target.value)}
+                />
+                <button onClick={handleShortenUrl}> Short Url </button>
              </div>
+             {longUrl && (
+             <p className="typed-url-preview">
+                You typed: {longUrl}
+             </p>
+             )}
              </div>
         </section>
     );
 }
 
-export default Herosection;
+export default HeroSection;

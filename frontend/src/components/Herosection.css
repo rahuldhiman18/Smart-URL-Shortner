@@ -70,3 +70,11 @@
 .url-input-box button:hover {
   background-color: #1d4ed8;
 }
+
+.typed-url-preview{
+    margin-top: 16px;
+    color: #94a3b8;
+    font-size: 14px;
+    word-break: break-all;
+
+}
